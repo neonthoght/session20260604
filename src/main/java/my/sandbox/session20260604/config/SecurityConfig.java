@@ -24,12 +24,16 @@ public class SecurityConfig {
                 .sessionCreationPolicy(SessionCreationPolicy.STATELESS) // Disables session creation
             )
             .csrf(csrf -> csrf.disable()) // CSRF creates sessions by default; disable it for stateless paths
-            .authorizeHttpRequests(auth -> auth
-                .anyRequest().authenticated()
-            )
-            .securityMatcher("/userapi/v1/**")
+            //.authorizeHttpRequests(auth -> auth
+            //    .anyRequest().authenticated()
+            //)
+            .securityMatcher("/auth/**")
+            .authorizeHttpRequests( req -> req.requestMatchers("/auth/**").permitAll())
             .sessionManagement(session -> session
                 .sessionCreationPolicy(SessionCreationPolicy.ALWAYS) // Enable session creation
+                .invalidSessionUrl("/auth/registration")
+                .maximumSessions(1)
+                .expiredUrl("/auth/registration")
             );
         return http.build();
     }

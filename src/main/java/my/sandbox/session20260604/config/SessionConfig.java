@@ -9,7 +9,7 @@ import org.springframework.context.annotation.Bean;
 import java.util.concurrent.ConcurrentHashMap;
 import org.springframework.session.jdbc.config.annotation.web.http.EnableJdbcHttpSession;
 
-@EnableJdbcHttpSession
+@EnableJdbcHttpSession (tableName="auth.session")
 @EnableSpringHttpSession
 @Configuration
 public class SessionConfig {
@@ -26,7 +26,7 @@ public class SessionConfig {
 	public CookieSerializer cookieSerializer() {
 		DefaultCookieSerializer serializer = new DefaultCookieSerializer();
 		serializer.setCookieName("JSESSIONID"); 
-		serializer.setCookiePath("/userapi/v1"); 
+		serializer.setCookiePath("/auth"); 
 		serializer.setDomainNamePattern("^.+?\\.(\\w+\\.[a-z]+)$"); 
 		return serializer;
 	}
